@@ -2,13 +2,15 @@ package travel_agency.controller;
 
 import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import travel_agency.model.Content;
 import travel_agency.repository.ContentCollectionRepository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/content")
@@ -26,4 +28,31 @@ public class ContentController {
         return repository.findAll();
     }
 
+    @GetMapping("/{i}")
+    public Content findById(@PathVariable Integer id) {
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    public void create(@RequestBody Content content) {
+        repository.save(content);
+        {
+
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{id}")
+    public void update(@RequestBody Content content, @PathVariable Integer id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        repository.save(content);
+    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete (@PathVariable Integer id) {
+        repository.delete(id);
+    }
 }
+
