@@ -1,7 +1,7 @@
 package travel_agency.repository;
 
 import lombok.RequiredArgsConstructor;
-// import org.springframework.security.config.web.servlet.oauth2.resourceserver.OpaqueTokenDsl;
+//import org.springframework.security.config.web.servlet.oauth2.resourceserver.OpaqueTokenDsl;
 import org.springframework.stereotype.Repository;
 import travel_agency.entities.Address;
 
